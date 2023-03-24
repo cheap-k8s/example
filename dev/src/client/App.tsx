@@ -1,25 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { reactLogo, viteLogo } from './assets'
 import './App.css'
+import { trpc } from './trcp'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const utils = trpc.useContext()
+  const counter = trpc.getCounter.useQuery()
+  const incrementCounter = trpc.incrementCounter.useMutation({
+    onSuccess: (data) => {
+      utils.getCounter.setData(undefined, data)
+    },
+  })
 
   return (
     <div className="App">
       <div>
-        <a href="https://vitejs.dev" target="_blank">
+        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://reactjs.org" target="_blank">
+        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <button type="button" onClick={() => incrementCounter.mutate()}>
+          count is {counter.data}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR

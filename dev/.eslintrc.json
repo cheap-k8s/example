@@ -9,13 +9,18 @@
       "files": [
         "src/client/**/*.tsx"
       ],
-      "env": {
-        "browser": true
-      },
       "extends": [
         "plugin:@shopify/react",
         "plugin:@shopify/prettier"
       ],
+      "rules": {
+        "react/react-in-jsx-scope": "off",
+        "@shopify/jsx-no-hardcoded-content": "off",
+        "@shopify/jsx-prefer-fragment-wrappers": "off"
+      },
+      "env": {
+        "browser": true
+      },
       "parserOptions": {
         "project": "./tsconfig.json"
       }
