@@ -1,0 +1,15 @@
+FROM node:18-slim
+
+WORKDIR /app
+
+RUN chown node:node ./
+USER node
+
+ARG NODE_ENV=production
+
+COPY package*.json ./
+COPY prisma ./prisma/
+RUN npm ci --omit=dev && npm cache clean --force
+
+COPY . ./
+CMD ["node_modules/tsx/dist/cli.js", "--tsconfig", "tsconfig.node.json", "src/server/index.ts"]

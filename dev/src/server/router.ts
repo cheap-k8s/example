@@ -1,4 +1,7 @@
+import EventEmitter from 'events'
+
 import { initTRPC } from '@trpc/server'
+import { observable } from '@trpc/server/observable'
 import superjson from 'superjson'
 
 import { DefaultCounterId } from '../models/Counter'
@@ -9,6 +12,9 @@ import { prisma } from './prisma'
 const { router, procedure } = initTRPC.context<Context>().create({
   transformer: superjson,
 })
+
+// NOTE: In real applications, it is replaced by Redis, etc.
+const emitter = new EventEmitter()
 
 export const appRouter = router({
   getCounter: procedure.query(async ({ ctx }) => {
@@ -30,7 +36,19 @@ export const appRouter = router({
         },
       },
     })
+    emitter.emit('add', counter.count)
     return counter.count
+  }),
+  onIncrementCounter: procedure.subscription(({ ctx }) => {
+    return observable<number>((emit) => {
+      const onAdd = (counter: number) => {
+        emit.next(counter)
+      }
+      emitter.on('add', onAdd)
+      return () => {
+        emitter.off('add', onAdd)
+      }
+    })
   }),
 })
 

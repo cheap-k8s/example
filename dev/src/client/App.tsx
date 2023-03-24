@@ -5,8 +5,9 @@ import { trpc } from './trcp'
 function App() {
   const utils = trpc.useContext()
   const counter = trpc.getCounter.useQuery()
-  const incrementCounter = trpc.incrementCounter.useMutation({
-    onSuccess: (data) => {
+  const incrementCounter = trpc.incrementCounter.useMutation()
+  trpc.onIncrementCounter.useSubscription(undefined, {
+    onData: (data) => {
       utils.getCounter.setData(undefined, data)
     },
   })

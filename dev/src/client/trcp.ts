@@ -5,8 +5,11 @@ import superjson from 'superjson'
 
 import type { AppRouter } from '../server/router'
 
+const host = import.meta.env.VITE_API_SERVER_HOST
+const port = import.meta.env.VITE_API_SERVER_PORT
+
 export const trpcWSLink = wsLink({
-  client: createWSClient({ url: 'ws://localhost:3000/trpc' }),
+  client: createWSClient({ url: `ws://${host}:${port}/trpc` }),
 })
 export const trpc = createTRPCReact<AppRouter>()
 

@@ -4,15 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev:client": "vite",
-    "dev:server": "tsx watch --tsconfig tsconfig.node.json src/server/index.ts",
-    "build:client": "tsc --project tsconfig.json && vite build",
-    "build:server": "tsc --noEmit --project tsconfig.node.json",
-    "start:server": "tsx --tsconfig tsconfig.node.json src/server/index.ts",
-    "preview:client": "vite preview"
+    "client:dev": "vite",
+    "client:check": "tsc --project tsconfig.json",
+    "client:build": "vite build",
+    "client:preview": "vite preview",
+    "server:dev": "tsx watch --tsconfig tsconfig.node.json src/server/index.ts",
+    "server:check": "tsc --noEmit --project tsconfig.node.json",
+    "server:prisma:generate": "prisma generate",
+    "server:prisma:migrate": "prisma migrate deploy"
   },
   "prisma": {
-    "seed":  "tsx src/server/seed.ts"
+    "seed": "tsx src/server/seed.ts"
   },
   "devDependencies": {
     "@shopify/eslint-plugin": "^42.0.3",
@@ -36,6 +38,7 @@
     "@prisma/client": "^4.11.0",
     "@trpc/server": "^10.18.0",
     "fastify": "^4.15.0",
+    "prisma": "^4.11.0",
     "superjson": "^1.12.2",
     "tsx": "^3.12.6",
     "zod": "^3.21.4"
