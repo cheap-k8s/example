@@ -1,0 +1,37 @@
+{
+  "extends": [
+    "plugin:@shopify/typescript",
+    "plugin:@shopify/typescript-type-checking"
+  ],
+
+  "overrides": [
+    {
+      "files": [
+        "src/client/**/*.tsx"
+      ],
+      "env": {
+        "browser": true
+      },
+      "extends": [
+        "plugin:@shopify/react",
+        "plugin:@shopify/prettier"
+      ],
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      }
+    },
+    {
+      "files": [
+        "src/server/**/*.ts",
+        "vite.config.ts"
+      ],
+      "extends": [
+        "plugin:@shopify/node",
+        "plugin:@shopify/prettier"
+      ],
+      "parserOptions": {
+        "project": "./tsconfig.node.json"
+      }
+    }
+  ]
+}
