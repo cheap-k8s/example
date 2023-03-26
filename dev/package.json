@@ -10,8 +10,7 @@
     "client:preview": "vite preview",
     "server:dev": "tsx watch --tsconfig tsconfig.node.json src/server/index.ts",
     "server:check": "tsc --noEmit --project tsconfig.node.json",
-    "server:prisma:generate": "prisma generate",
-    "server:prisma:migrate": "prisma migrate deploy"
+    "server:migrate": "prisma migrate deploy"
   },
   "prisma": {
     "seed": "tsx src/server/seed.ts"
