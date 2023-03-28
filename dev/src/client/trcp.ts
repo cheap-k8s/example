@@ -11,7 +11,7 @@ const env = getEnvVars()
 
 export const trpcWSLink = wsLink({
   client: createWSClient({
-    url: `ws://${env.apiServerHost}:${env.apiServerPort}/trpc`,
+    url: `${env.protocol}://${env.apiServerHost}:${env.apiServerPort}/trpc`,
   }),
 })
 export const trpc = createTRPCReact<AppRouter>()
