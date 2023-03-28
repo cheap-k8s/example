@@ -23,7 +23,7 @@ server.get('/health', () => "It's healthy!")
 
 try {
   await server.listen({ port, host: '0.0.0.0' })
-  console.log('listening on port', port)
+  console.log('listening on port', port, process.env.db_uri)
 } catch (error) {
   server.log.error(error)
   process.exit(1)
