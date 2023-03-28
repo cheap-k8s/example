@@ -22,7 +22,7 @@ await server.register(fastifyTRPCPlugin, {
 server.get('/health', () => "It's healthy!")
 
 try {
-  await server.listen({ port })
+  await server.listen({ port, host: '0.0.0.0' })
   console.log('listening on port', port)
 } catch (error) {
   server.log.error(error)
