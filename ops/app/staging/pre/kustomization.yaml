@@ -4,8 +4,8 @@ resources:
   - ../../base/pre
 images:
   - name: server
-    newName: server
-    newTag: v0.0.0
+    newName: us-central1-docker.pkg.dev/cheap-k8s-dev/example/server
+    newTag: v0.1.0-20230328-015821utc
 patches:
   - |-
     apiVersion: apps/v1
