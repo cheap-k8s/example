@@ -81,9 +81,9 @@ jobs:
         uses: mikefarah/yq@master
         with:
           cmd: >-
-            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/kustomization.yaml &&
-            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/pre/kustomization.yaml &&
-            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/post/kustomization.yaml
+            yq -i 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/kustomization.yaml &&
+            yq -i 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/pre/kustomization.yaml &&
+            yq -i 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/post/kustomization.yaml
 
       - name: Release staging (Commit staging kustomization changes)
         uses: EndBug/add-and-commit@v9
@@ -96,9 +96,9 @@ jobs:
         uses: mikefarah/yq@master
         with:
           cmd: >-
-            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/kustomization.yaml &&
-            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/pre/kustomization.yaml &&
-            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/post/kustomization.yaml
+            yq -i 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/kustomization.yaml &&
+            yq -i 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/pre/kustomization.yaml &&
+            yq -i 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/post/kustomization.yaml
 
       - name: Create a PR for a production release
         uses: peter-evans/create-pull-request@v4
