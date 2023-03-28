@@ -1,0 +1,50 @@
+name: release-production
+
+on:
+  pull_request:
+    branches: [main]
+    types: [closed]
+    paths: [ops/gitops/production/**]
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: read
+
+env:
+  docker_registry: us-central1-docker.pkg.dev
+  docker_tag_prefix: us-central1-docker.pkg.dev/prototype-infra/proto3rd
+  gcp_workload_identity_provider: projects/537725745995/locations/global/workloadIdentityPools/cluster-c5fe837-ar-admin-pool/providers/cluster-c5fe837-github
+  gcp_service_account: cluster-c5fe837-ar-admin-sa@prototype-infra.iam.gserviceaccount.com
+
+jobs:
+  release-production:
+    # Only pull requests are merged && The branch name is 'release-production'
+    if: github.event.pull_request.merged == true && github.head_ref == 'release-production'
+    name: Publish next release notes
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Authenticate with Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: ${{ env.gcp_workload_identity_provider }}
+          service_account: ${{ env.gcp_service_account }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Publish next release notes
+        id: release_drafter
+        uses: release-drafter/release-drafter@v5
+        with:
+          publish: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Tag a docker image
+        run: |
+          gcloud artifacts docker tags add \
+            ${{ env.docker_tag_prefix }}/client:${{ steps.release_drafter.outputs.tag_name }} \
+            ${{ env.docker_tag_prefix }}/client:production

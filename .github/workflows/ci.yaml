@@ -1,0 +1,121 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: [ops/**]
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: write
+
+env:
+  docker_registry: us-central1-docker.pkg.dev
+  docker_tag_prefix: us-central1-docker.pkg.dev/prototype-infra/proto3rd
+  gcp_workload_identity_provider: projects/537725745995/locations/global/workloadIdentityPools/cluster-c5fe837-ar-admin-pool/providers/cluster-c5fe837-github
+  gcp_service_account: cluster-c5fe837-ar-admin-sa@prototype-infra.iam.gserviceaccount.com
+
+jobs:
+  docker-release:
+    name: Tagged Docker release to Google Artifact Registry
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Authenticate with Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          token_format: access_token
+          workload_identity_provider: ${{ env.gcp_workload_identity_provider }}
+          service_account: ${{ env.gcp_service_account }}
+
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.docker_registry }}
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Drafts next release notes
+        id: release_drafter
+        uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Generate a tag name for staging deployment
+        id: staging_tag_generator
+        run: |
+          export TAG_NAME=${{ steps.release_drafter.outputs.tag_name }}-$(date "+%Y%m%d-%H%M%Sutc")
+          echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+
+      - name: Build client docker image and push to Google Artifact Registry
+        uses: docker/build-push-action@v4
+        with:
+          context: ./dev
+          file: ./dev/Dockerfile.client
+          push: true
+          tags: |
+            ${{ env.docker_tag_prefix }}/client:${{ steps.release_drafter.outputs.tag_name }}
+            ${{ env.docker_tag_prefix }}/client:${{ steps.staging_tag_generator.outputs.tag_name }}
+            ${{ env.docker_tag_prefix }}/client:staging
+
+      - name: Build server docker image and push to Google Artifact Registry
+        uses: docker/build-push-action@v4
+        with:
+          context: ./dev
+          file: ./dev/Dockerfile.server
+          push: true
+          tags: |
+            ${{ env.docker_tag_prefix }}/server:${{ steps.release_drafter.outputs.tag_name }}
+            ${{ env.docker_tag_prefix }}/server:${{ steps.staging_tag_generator.outputs.tag_name }}
+            ${{ env.docker_tag_prefix }}/server:staging
+
+      - name: Update staging kustomization
+        uses: mikefarah/yq@master
+        with:
+          cmd: >-
+            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/kustomization.yaml &&
+            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/pre/kustomization.yaml &&
+            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/staging/post/kustomization.yaml
+
+      - name: Release staging (Commit staging kustomization changes)
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "release staging: ${{ steps.staging_tag_generator.outputs.tag_name }}"
+          add: ops
+          default_author: github_actions
+
+      - name: Update production kustomization
+        uses: mikefarah/yq@master
+        with:
+          cmd: >-
+            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/kustomization.yaml &&
+            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/pre/kustomization.yaml &&
+            yq -i 'yq 'with(.images[]; .newName = "${{ env.docker_tag_prefix }}/" + .name | .newTag = "${{ steps.staging_tag_generator.outputs.tag_name }}")' ops/app/production/post/kustomization.yaml
+
+      - name: Create a PR for a production release
+        uses: peter-evans/create-pull-request@v4
+        with:
+          title: "release: ${{ steps.release_drafter.outputs.tag_name }}"
+          body: "changes: ${{ steps.release_drafter.outputs.html_url }}"
+          branch: release-production
+          labels: skip-changelog
+          add-paths: ops
+          delete-branch: true
+          author: GitHub <noreply@github.com>
+
+      - name: Clean old docker images
+        uses: "docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli"
+        with:
+          args: >-
+            -repo=${{ env.docker_tag_prefix }}/client
+            -repo=${{ env.docker_tag_prefix }}/server
+            -tag-filter-all=^v(\d+).(\d+).(\d+)
+            -keep=3

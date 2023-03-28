@@ -1,0 +1,26 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+tag-prefix: v
+exclude-labels:
+  - 'skip-changelog'
+categories:
+  - title: 'Breaking Changes'
+    lable: 'breaking'
+  - title: 'Features'
+    label: 'feature'
+  - title: 'Bug Fixes'
+    label: 'fix'
+  - title: 'Maintenance'
+    label: 'chore'
+version-resolver:
+  major:
+    labels: ['breaking']
+  minor:
+    labels: ['feature']
+  patch:
+    labels: ['fix','chore']
+  default: patch
+template: |
+  ## What's Changed
+
+  $CHANGES
