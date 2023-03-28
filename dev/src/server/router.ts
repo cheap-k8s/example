@@ -18,17 +18,12 @@ const emitter = new EventEmitter()
 
 export const appRouter = router({
   getCounter: procedure.query(async ({ ctx }) => {
-    try {
-      const counter = await prisma.counter.findFirstOrThrow({
-        where: {
-          id: DefaultCounterId,
-        },
-      })
-      return counter.count
-    } catch (error) {
-      console.log(error)
-      return 0
-    }
+    const counter = await prisma.counter.findFirstOrThrow({
+      where: {
+        id: DefaultCounterId,
+      },
+    })
+    return counter.count
   }),
   incrementCounter: procedure.mutation(async ({ ctx }) => {
     const counter = await prisma.counter.update({
