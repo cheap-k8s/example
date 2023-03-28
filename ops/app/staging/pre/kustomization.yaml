@@ -6,12 +6,12 @@ images:
   - name: server
     newName: us-central1-docker.pkg.dev/cheap-k8s-dev/example/server
     newTag: v0.1.0-20230328-015821utc
-patches:
+patchesStrategicMerge:
   - |-
-    apiVersion: apps/v1
-    kind: Deployment
+    apiVersion: batch/v1
+    kind: Job
     metadata:
-      name: server
+      name: migration
     spec:
       template:
         spec:

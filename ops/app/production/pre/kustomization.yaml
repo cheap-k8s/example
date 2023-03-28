@@ -8,10 +8,10 @@ images:
     newTag: v0.0.0
 patchesStrategicMerge:
   - |-
-    apiVersion: apps/v1
-    kind: Deployment
+    apiVersion: batch/v1
+    kind: Job
     metadata:
-      name: server
+      name: migration
     spec:
       template:
         spec:
