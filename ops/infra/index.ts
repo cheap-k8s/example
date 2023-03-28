@@ -48,7 +48,7 @@ const gitOpsConfigs = [
       targets: [
         {
           name: "staging",
-          path: "./ops/gitops/staging",
+          path: "./ops/app/staging",
           step: {
             pre: {
               enable: true,
@@ -60,7 +60,7 @@ const gitOpsConfigs = [
         },
         {
           name: "production",
-          path: "./ops/gitops/production",
+          path: "./ops/app/production",
           step: {
             pre: {
               enable: true,

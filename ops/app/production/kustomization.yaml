@@ -24,6 +24,7 @@ patches:
       - op: replace
         path: /spec/rules/0/host
         value: api-production.poc.epdndo.com
+patchesStrategicMerge:
   - |-
     apiVersion: apps/v1
     kind: Deployment

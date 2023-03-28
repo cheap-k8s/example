@@ -6,7 +6,7 @@ images:
   - name: server
     newName: server
     newTag: v0.0.0
-patches:
+patchesStrategicMerge:
   - |-
     apiVersion: apps/v1
     kind: Deployment
