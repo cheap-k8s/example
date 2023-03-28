@@ -115,7 +115,6 @@ jobs:
         uses: "docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli"
         with:
           args: >-
-            -repo=${{ env.docker_tag_prefix }}/client
             -repo=${{ env.docker_tag_prefix }}/server
             -tag-filter-all=^v(\d+).(\d+).(\d+)
             -keep=3
