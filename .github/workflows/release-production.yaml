@@ -13,9 +13,9 @@ permissions:
 
 env:
   docker_registry: us-central1-docker.pkg.dev
-  docker_tag_prefix: us-central1-docker.pkg.dev/prototype-infra/proto3rd
-  gcp_workload_identity_provider: projects/537725745995/locations/global/workloadIdentityPools/cluster-c5fe837-ar-admin-pool/providers/cluster-c5fe837-github
-  gcp_service_account: cluster-c5fe837-ar-admin-sa@prototype-infra.iam.gserviceaccount.com
+  docker_tag_prefix: us-central1-docker.pkg.dev/cheap-k8s-dev/example
+  gcp_workload_identity_provider: projects/220849575605/locations/global/workloadIdentityPools/cluster-901577c-ar-admin-pool/providers/cluster-901577c-github
+  gcp_service_account: cluster-901577c-ar-admin-sa@cheap-k8s-dev.iam.gserviceaccount.com
 
 jobs:
   release-production:
