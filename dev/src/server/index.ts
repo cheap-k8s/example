@@ -6,7 +6,7 @@ import cors from '@fastify/cors'
 import { appRouter } from './router'
 import { createContext } from './context'
 
-const port = Number(process.env.VITE_API_SERVER_PORT)
+const port = 3000
 const server = fastify({ logger: true })
 
 await server.register(cors, {
