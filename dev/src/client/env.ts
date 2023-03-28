@@ -5,13 +5,12 @@ export interface EnvVars {
 }
 
 export function getEnvVars(): EnvVars {
-  const apiServerPort = 3000
   const isDev = import.meta.env.DEV
   if (isDev) {
     return {
       protocol: 'ws',
       apiServerHost: 'localhost',
-      apiServerPort,
+      apiServerPort: 3000,
     }
   }
   const isStaging = location.hostname.includes('staging')
@@ -19,12 +18,12 @@ export function getEnvVars(): EnvVars {
     return {
       protocol: 'wss',
       apiServerHost: 'api-staging.poc.epdndo.com',
-      apiServerPort,
+      apiServerPort: 443,
     }
   }
   return {
     protocol: 'wss',
     apiServerHost: 'api-production.poc.epdndo.com',
-    apiServerPort,
+    apiServerPort: 443,
   }
 }
