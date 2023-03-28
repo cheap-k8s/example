@@ -1,7 +1,7 @@
 encryptionsalt: v1:8ERTHHUW39s=:v1:5DvxTt4NQYAXWUq1:lJIwrChHacx1YFEGCWrbYuXzUEGq1A==
 config:
+  cheap-k8s-example-infra:githubToken:
+    secure: v1:aFsrUoXkqj+LbuS/:9q/3qqIoJpCJeO5bo3i+OvWkM5xoSRQyDzlRnlOxhftOP+vfzxtty9mGw1z9o0iz+Q3BuIBF9Bq9dfLrWykaTLkJGIsjxf7YLuvX+8mTWAmOX5eTnQYudtq2IHkCH/TZtD+U//GduIwvmMeAyQ==
+  cheap-k8s-example-infra:nodesPerZone: "2"
   gcp:project: cheap-k8s-dev
   gcp:region: us-central1
-  cheap-k8s-example-infra:githubToken:
-    secure: v1:MvYaNTYDxPY1ncRn:vcLfyjpo1WIsg/sdrgVdaX0LCGPHY/C9hwL5mEyb+VghlrGkFzLX08hG+eR2a0vTJ6CCMP5I6xY=
-  cheap-k8s-example-infra:nodesPerZone: "2"

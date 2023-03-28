@@ -39,7 +39,6 @@ const gitOpsConfigs = [
   {
     name: "example",
     secret: {
-      username: "dekimasoon",
       password: githubToken,
     },
     repository: {
