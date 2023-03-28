@@ -1,0 +1,12 @@
+{
+    "name": "cheap-k8s-example-infra",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18"
+    },
+    "dependencies": {
+        "@pulumi/gcp": "^6.0.0",
+        "@pulumi/kubernetes": "^3.0.0",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

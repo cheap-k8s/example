@@ -1,0 +1,400 @@
+{
+    "version": 3,
+    "deployment": {
+        "manifest": {
+            "time": "2023-03-24T06:40:43.2475403Z",
+            "magic": "375b9a4575c488972efc376a5a54ab60c43297fcce335704037cb8c668a4c864",
+            "version": "v3.53.1"
+        },
+        "secrets_providers": {
+            "type": "passphrase",
+            "state": {
+                "salt": "v1:8ERTHHUW39s=:v1:5DvxTt4NQYAXWUq1:lJIwrChHacx1YFEGCWrbYuXzUEGq1A=="
+            }
+        },
+        "resources": [
+            {
+                "urn": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "outputs": {
+                    "artifactRegistryAdminServiceAccountEmail": "cluster-eaf2a49-ar-admin-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "artifactRegistryAdminWorkloadIdentityPoolGithubProvierName": "projects/220849575605/locations/global/workloadIdentityPools/cluster-eaf2a49-ar-admin-pool/providers/cluster-eaf2a49-github",
+                    "artifactRegistryDomain": "us-central1-docker.pkg.dev",
+                    "artifactResistryTagPrefixs": [
+                        "us-central1-docker.pkg.dev/cheap-k8s-dev/proto3rd"
+                    ],
+                    "projectId": "cheap-k8s-dev"
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0",
+                "custom": true,
+                "id": "a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "type": "pulumi:providers:gcp",
+                "inputs": {
+                    "project": "cheap-k8s-dev",
+                    "region": "us-central1",
+                    "version": "6.42.0"
+                },
+                "outputs": {
+                    "project": "cheap-k8s-dev",
+                    "region": "us-central1",
+                    "version": "6.42.0"
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:serviceAccount/account:Account::caddy-sa",
+                "custom": true,
+                "id": "projects/cheap-k8s-dev/serviceAccounts/caddy-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                "type": "gcp:serviceAccount/account:Account",
+                "inputs": {
+                    "__defaults": [
+                        "disabled"
+                    ],
+                    "accountId": "caddy-sa",
+                    "disabled": false,
+                    "displayName": "Caddy Service Account"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":300000000000}}",
+                    "accountId": "caddy-sa",
+                    "description": "",
+                    "disabled": false,
+                    "displayName": "Caddy Service Account",
+                    "email": "caddy-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "id": "projects/cheap-k8s-dev/serviceAccounts/caddy-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "member": "serviceAccount:caddy-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "name": "projects/cheap-k8s-dev/serviceAccounts/caddy-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "project": "cheap-k8s-dev",
+                    "uniqueId": "109682073733718048207"
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "propertyDependencies": {
+                    "accountId": null,
+                    "displayName": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:artifactregistry/repository:Repository::artifact-registry-proto3rd",
+                "custom": true,
+                "id": "projects/cheap-k8s-dev/locations/us-central1/repositories/proto3rd",
+                "type": "gcp:artifactregistry/repository:Repository",
+                "inputs": {
+                    "__defaults": [],
+                    "description": "proto3rd",
+                    "format": "DOCKER",
+                    "location": "us-central1",
+                    "repositoryId": "proto3rd"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":1200000000000,\"delete\":1200000000000,\"update\":1200000000000}}",
+                    "createTime": "2023-03-23T05:23:49.188599Z",
+                    "description": "proto3rd",
+                    "format": "DOCKER",
+                    "id": "projects/cheap-k8s-dev/locations/us-central1/repositories/proto3rd",
+                    "kmsKeyName": "",
+                    "labels": {},
+                    "location": "us-central1",
+                    "mavenConfig": null,
+                    "name": "proto3rd",
+                    "project": "cheap-k8s-dev",
+                    "repositoryId": "proto3rd",
+                    "updateTime": "2023-03-23T05:23:49.188599Z"
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "propertyDependencies": {
+                    "description": null,
+                    "format": null,
+                    "location": null,
+                    "repositoryId": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:compute/network:Network::network",
+                "custom": true,
+                "id": "projects/cheap-k8s-dev/global/networks/network-8e86425",
+                "type": "gcp:compute/network:Network",
+                "inputs": {
+                    "__defaults": [
+                        "deleteDefaultRoutesOnCreate",
+                        "name"
+                    ],
+                    "autoCreateSubnetworks": false,
+                    "deleteDefaultRoutesOnCreate": false,
+                    "name": "network-8e86425"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":1200000000000,\"delete\":1200000000000,\"update\":1200000000000}}",
+                    "autoCreateSubnetworks": false,
+                    "deleteDefaultRoutesOnCreate": false,
+                    "description": "",
+                    "enableUlaInternalIpv6": false,
+                    "gatewayIpv4": "",
+                    "id": "projects/cheap-k8s-dev/global/networks/network-8e86425",
+                    "internalIpv6Range": "",
+                    "mtu": 0,
+                    "name": "network-8e86425",
+                    "project": "cheap-k8s-dev",
+                    "routingMode": "REGIONAL",
+                    "selfLink": "https://www.googleapis.com/compute/v1/projects/cheap-k8s-dev/global/networks/network-8e86425"
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "propertyDependencies": {
+                    "autoCreateSubnetworks": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:compute/address:Address::caddy-ip",
+                "custom": true,
+                "id": "projects/cheap-k8s-dev/regions/us-central1/addresses/caddy-ip-d3307f3",
+                "type": "gcp:compute/address:Address",
+                "inputs": {
+                    "__defaults": [
+                        "addressType",
+                        "name"
+                    ],
+                    "addressType": "EXTERNAL",
+                    "name": "caddy-ip-d3307f3"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":1200000000000,\"delete\":1200000000000,\"update\":1200000000000}}",
+                    "address": "34.68.27.193",
+                    "addressType": "EXTERNAL",
+                    "creationTimestamp": "2023-03-22T22:21:29.858-07:00",
+                    "description": "",
+                    "id": "projects/cheap-k8s-dev/regions/us-central1/addresses/caddy-ip-d3307f3",
+                    "labelFingerprint": "42WmSpB8rSM=",
+                    "labels": {},
+                    "name": "caddy-ip-d3307f3",
+                    "network": "",
+                    "networkTier": "PREMIUM",
+                    "prefixLength": 0,
+                    "project": "cheap-k8s-dev",
+                    "purpose": "",
+                    "region": "us-central1",
+                    "selfLink": "https://www.googleapis.com/compute/v1/projects/cheap-k8s-dev/regions/us-central1/addresses/caddy-ip-d3307f3",
+                    "subnetwork": "",
+                    "users": [
+                        "https://www.googleapis.com/compute/beta/projects/cheap-k8s-dev/zones/us-central1-a/instances/caddy-916d1aa"
+                    ]
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab"
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:iam/workloadIdentityPool:WorkloadIdentityPool::ar-admin-wip",
+                "custom": true,
+                "id": "projects/cheap-k8s-dev/locations/global/workloadIdentityPools/cluster-eaf2a49-ar-admin-pool",
+                "type": "gcp:iam/workloadIdentityPool:WorkloadIdentityPool",
+                "inputs": {
+                    "__defaults": [],
+                    "workloadIdentityPoolId": "cluster-eaf2a49-ar-admin-pool"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":1200000000000,\"delete\":1200000000000,\"update\":1200000000000}}",
+                    "description": "",
+                    "disabled": false,
+                    "displayName": "",
+                    "id": "projects/cheap-k8s-dev/locations/global/workloadIdentityPools/cluster-eaf2a49-ar-admin-pool",
+                    "name": "projects/220849575605/locations/global/workloadIdentityPools/cluster-eaf2a49-ar-admin-pool",
+                    "project": "cheap-k8s-dev",
+                    "state": "ACTIVE",
+                    "workloadIdentityPoolId": "cluster-eaf2a49-ar-admin-pool"
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "propertyDependencies": {
+                    "workloadIdentityPoolId": [
+                        "urn:pulumi:dev::infra::gcp:container/cluster:Cluster::cluster"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:storage/bucket:Bucket::pgo-backup-bucket",
+                "custom": true,
+                "id": "cluster-eaf2a49-db-backup",
+                "type": "gcp:storage/bucket:Bucket",
+                "inputs": {
+                    "__defaults": [
+                        "forceDestroy",
+                        "storageClass"
+                    ],
+                    "forceDestroy": false,
+                    "location": "us-central1",
+                    "name": "cluster-eaf2a49-db-backup",
+                    "storageClass": "STANDARD"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":240000000000,\"read\":240000000000,\"update\":240000000000}}",
+                    "cors": [],
+                    "customPlacementConfig": null,
+                    "defaultEventBasedHold": false,
+                    "encryption": null,
+                    "forceDestroy": false,
+                    "id": "cluster-eaf2a49-db-backup",
+                    "labels": {},
+                    "lifecycleRules": [],
+                    "location": "US-CENTRAL1",
+                    "logging": null,
+                    "name": "cluster-eaf2a49-db-backup",
+                    "project": "cheap-k8s-dev",
+                    "publicAccessPrevention": "inherited",
+                    "requesterPays": false,
+                    "retentionPolicy": null,
+                    "selfLink": "https://www.googleapis.com/storage/v1/b/cluster-eaf2a49-db-backup",
+                    "storageClass": "STANDARD",
+                    "uniformBucketLevelAccess": false,
+                    "url": "gs://cluster-eaf2a49-db-backup",
+                    "versioning": null,
+                    "website": null
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "propertyDependencies": {
+                    "location": null,
+                    "name": [
+                        "urn:pulumi:dev::infra::gcp:container/cluster:Cluster::cluster"
+                    ]
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:serviceAccount/account:Account::pgo-backup-sa",
+                "custom": true,
+                "id": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-pgo-backup-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                "type": "gcp:serviceAccount/account:Account",
+                "inputs": {
+                    "__defaults": [
+                        "disabled"
+                    ],
+                    "accountId": "cluster-eaf2a49-pgo-backup-sa",
+                    "disabled": false,
+                    "displayName": "PGO Backup SA"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":300000000000}}",
+                    "accountId": "cluster-eaf2a49-pgo-backup-sa",
+                    "description": "",
+                    "disabled": false,
+                    "displayName": "PGO Backup SA",
+                    "email": "cluster-eaf2a49-pgo-backup-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "id": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-pgo-backup-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "member": "serviceAccount:cluster-eaf2a49-pgo-backup-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "name": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-pgo-backup-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "project": "cheap-k8s-dev",
+                    "uniqueId": "113348089798567492055"
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "propertyDependencies": {
+                    "accountId": [
+                        "urn:pulumi:dev::infra::gcp:container/cluster:Cluster::cluster"
+                    ],
+                    "displayName": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:serviceAccount/account:Account::artifact-resistry-admin-sa",
+                "custom": true,
+                "id": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-ar-admin-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                "type": "gcp:serviceAccount/account:Account",
+                "inputs": {
+                    "__defaults": [
+                        "disabled"
+                    ],
+                    "accountId": "cluster-eaf2a49-ar-admin-sa",
+                    "disabled": false,
+                    "displayName": "Artifact Resistry Admin SA"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":300000000000}}",
+                    "accountId": "cluster-eaf2a49-ar-admin-sa",
+                    "description": "",
+                    "disabled": false,
+                    "displayName": "Artifact Resistry Admin SA",
+                    "email": "cluster-eaf2a49-ar-admin-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "id": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-ar-admin-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "member": "serviceAccount:cluster-eaf2a49-ar-admin-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "name": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-ar-admin-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "project": "cheap-k8s-dev",
+                    "uniqueId": "106308189599502884645"
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "propertyDependencies": {
+                    "accountId": [
+                        "urn:pulumi:dev::infra::gcp:container/cluster:Cluster::cluster"
+                    ],
+                    "displayName": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::gcp:serviceAccount/account:Account::nodepool-sa",
+                "custom": true,
+                "id": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-np-1-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                "type": "gcp:serviceAccount/account:Account",
+                "inputs": {
+                    "__defaults": [
+                        "disabled"
+                    ],
+                    "accountId": "cluster-eaf2a49-np-1-sa",
+                    "disabled": false,
+                    "displayName": "GKE Nodepool Service Account"
+                },
+                "outputs": {
+                    "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":300000000000}}",
+                    "accountId": "cluster-eaf2a49-np-1-sa",
+                    "description": "",
+                    "disabled": false,
+                    "displayName": "GKE Nodepool Service Account",
+                    "email": "cluster-eaf2a49-np-1-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "id": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-np-1-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "member": "serviceAccount:cluster-eaf2a49-np-1-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "name": "projects/cheap-k8s-dev/serviceAccounts/cluster-eaf2a49-np-1-sa@cheap-k8s-dev.iam.gserviceaccount.com",
+                    "project": "cheap-k8s-dev",
+                    "uniqueId": "114066520052901045269"
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "provider": "urn:pulumi:dev::infra::pulumi:providers:gcp::default_6_42_0::a0233a07-53f2-4b91-8707-ebfd24fa61ab",
+                "propertyDependencies": {
+                    "accountId": [
+                        "urn:pulumi:dev::infra::gcp:container/cluster:Cluster::cluster"
+                    ],
+                    "displayName": null
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::infra::pulumi:providers:kubernetes::k8s-provider",
+                "custom": true,
+                "id": "d868e1fa-3660-4bfb-9142-10dce91b378a",
+                "type": "pulumi:providers:kubernetes",
+                "inputs": {
+                    "enableServerSideApply": "true",
+                    "kubeconfig": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "ciphertext": "v1:4BiVDMvQFHaYjxsq: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"
+                    },
+                    "version": "3.22.1"
+                },
+                "outputs": {
+                    "enableServerSideApply": "true",
+                    "kubeconfig": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "ciphertext": "v1:mRm1aF5mRAgMeAk4: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"
+                    },
+                    "version": "3.22.1"
+                },
+                "parent": "urn:pulumi:dev::infra::pulumi:pulumi:Stack::infra-dev",
+                "propertyDependencies": {
+                    "enableServerSideApply": null,
+                    "kubeconfig": [
+                        "urn:pulumi:dev::infra::gcp:container/cluster:Cluster::cluster"
+                    ]
+                }
+            }
+        ]
+    }
+}

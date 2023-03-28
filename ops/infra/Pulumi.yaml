@@ -1,0 +1,3 @@
+name: cheap-k8s-example-infra
+description: Cheap k8s example infra
+runtime: nodejs

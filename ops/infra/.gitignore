@@ -1,0 +1,4 @@
+node_modules
+gcp-key.json
+.pulumi/*
+!.pulumi/stacks

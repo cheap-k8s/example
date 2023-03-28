@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../base
+images:
+  - name: client
+    newName: client
+    newTag: v0.0.0
+  - name: server
+    newName: server
+    newTag: v0.0.0
+patches:
+  - target:
+      kind: Ingress
+      name: client
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: production.poc.epdndo.com
+  - target:
+      kind: Ingress
+      name: server
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: api-production.poc.epdndo.com
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: server
+    spec:
+      template:
+        spec:
+          containers:
+            - name: server
+              envFrom:
+                - prefix: db_
+                  secretRef:
+                    name: pgo-cluster-pguser-example-production

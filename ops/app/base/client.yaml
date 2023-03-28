@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: client
+  name: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - image: client
+          name: client
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: 64Mi
+            requests:
+              memory: 64Mi
+              cpu: 64m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: client
+  name: client
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: client
+  type: NodePort
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: client
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: client
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: client
+                port:
+                  number: 80
