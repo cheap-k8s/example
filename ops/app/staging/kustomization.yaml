@@ -5,10 +5,10 @@ resources:
 images:
   - name: client
     newName: us-central1-docker.pkg.dev/cheap-k8s-dev/example/client
-    newTag: v0.1.0-20230328-133638utc
+    newTag: v0.1.0-20230328-140014utc
   - name: server
     newName: us-central1-docker.pkg.dev/cheap-k8s-dev/example/server
-    newTag: v0.1.0-20230328-133638utc
+    newTag: v0.1.0-20230328-140014utc
 patches:
   - target:
       kind: Ingress
