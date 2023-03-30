@@ -111,10 +111,11 @@ jobs:
           delete-branch: true
           author: GitHub <noreply@github.com>
 
-      - name: Clean old docker images
-        uses: "docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli"
-        with:
-          args: >-
-            -repo=${{ env.docker_tag_prefix }}/server
-            -tag-filter-all=^v(\d+).(\d+).(\d+)
-            -keep=3
+      # NOTE: I don't know what caused the authorization error, so I'm commenting it out for now.
+      # - name: Clean old docker images
+      #   uses: "docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli"
+      #   with:
+      #     args: >-
+      #       -repo=${{ env.docker_tag_prefix }}/server
+      #       -tag-filter-all=^v(\d+).(\d+).(\d+)
+      #       -keep=3
