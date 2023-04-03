@@ -21,11 +21,18 @@ spec:
             - containerPort: 3000
           resources:
             limits:
-              memory: 192Mi
+              memory: 256Mi
             requests:
-              memory: 192Mi
+              memory: 256Mi
               cpu: 128m
           env:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: server
 
 ---
 apiVersion: v1
