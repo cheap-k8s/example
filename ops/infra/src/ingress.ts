@@ -42,6 +42,18 @@ export function createIngressResources({ k8sProvider }: IngressResourcesProps) {
               memory: 0,
             },
           },
+          topologySpreadConstraints: [
+            {
+              maxSkew: 1,
+              topologyKey: 'kubernetes.io/hostname',
+              whenUnsatisfiable: 'DoNotSchedule',
+              labelSelector: {
+                matchLabels: {
+                  'app.kubernetes.io/name': 'ingress-nginx',
+                },
+              },
+            },
+          ],
         },
       },
     },

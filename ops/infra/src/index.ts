@@ -7,6 +7,7 @@ import { createPGOResources } from './pgo'
 import { createIngressResources } from './ingress'
 import { createCaddyResources } from './caddy'
 import { createK8sClusterResources } from './cluster'
+import { createDeschedulerResources } from './descheduler'
 
 const providerCfg = new pulumi.Config('gcp')
 const project = providerCfg.require('project')
@@ -124,6 +125,7 @@ createCaddyResources({
   projectName: project,
   domainNames,
 })
+createDeschedulerResources({ k8sProvider })
 
 export const projectId = project
 export const artifactRegistryAdminWorkloadIdentityPoolGithubProvierName =
