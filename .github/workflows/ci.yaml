@@ -3,7 +3,7 @@ name: ci
 on:
   push:
     branches: [main]
-    paths-ignore: [ops/**]
+    paths-ignore: [ops/app/**]
 
 permissions:
   contents: write

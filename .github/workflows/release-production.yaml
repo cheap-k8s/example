@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
     types: [closed]
-    paths: [ops/gitops/production/**]
+    paths: [ops/app/production/**]
 
 permissions:
   contents: write
