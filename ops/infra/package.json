@@ -1,6 +1,6 @@
 {
     "name": "cheap-k8s-example-infra",
-    "main": "index.ts",
+    "main": "src/index.ts",
     "devDependencies": {
         "@types/node": "^18"
     },
