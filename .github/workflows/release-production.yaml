@@ -48,6 +48,6 @@ jobs:
           gcloud artifacts docker tags add \
             ${{ env.docker_tag_prefix }}/client:${{ steps.release_drafter.outputs.tag_name }} \
             ${{ env.docker_tag_prefix }}/client:production && \
-           gcloud artifacts docker tags add \
+          gcloud artifacts docker tags add \
             ${{ env.docker_tag_prefix }}/server:${{ steps.release_drafter.outputs.tag_name }} \
-            ${{ env.docker_tag_prefix }}/server:production && \
+            ${{ env.docker_tag_prefix }}/server:production
