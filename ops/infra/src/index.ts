@@ -125,7 +125,6 @@ createCaddyResources({
   projectName: project,
   domainNames,
 })
-createDeschedulerResources({ k8sProvider })
 
 export const projectId = project
 export const artifactRegistryAdminWorkloadIdentityPoolGithubProvierName =
