@@ -116,7 +116,7 @@ export function createCaddyResources({
       metadata: {
         'gce-container-declaration': pulumi.interpolate`spec:
   containers:
-  - image: ghcr.io/persol-epdndo/prototype-infra-poc/caddy:latest
+  - image: ghcr.io/cheap-k8s/cheap-k8s/caddy:latest
     name: caddy
     env:
     - name: DOMAIN_NAMES
