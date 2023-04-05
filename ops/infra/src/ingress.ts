@@ -22,38 +22,26 @@ export function createIngressResources({ k8sProvider }: IngressResourcesProps) {
     'ingress-nginx',
     {
       chart: 'ingress-nginx',
-      namespace: 'ingress-nginx',
+      namespace: ingressNamespace.metadata.name,
       repositoryOpts: {
         repo: 'https://kubernetes.github.io/ingress-nginx',
       },
       values: {
         controller: {
+          kind: 'DaemonSet',
           service: {
             type: 'NodePort',
             nodePorts: {
-              http: 32080,
-              https: 32443,
+              http: 30080,
+              https: 30443,
             },
           },
-          replicaCount: 2,
           resources: {
             requests: {
               cpu: 0,
               memory: 0,
             },
           },
-          topologySpreadConstraints: [
-            {
-              maxSkew: 1,
-              topologyKey: 'kubernetes.io/hostname',
-              whenUnsatisfiable: 'DoNotSchedule',
-              labelSelector: {
-                matchLabels: {
-                  'app.kubernetes.io/name': 'ingress-nginx',
-                },
-              },
-            },
-          ],
         },
       },
     },
