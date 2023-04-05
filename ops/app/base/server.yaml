@@ -22,9 +22,10 @@ spec:
           resources:
             limits:
               memory: 256Mi
-            requests:
-              memory: 256Mi
               cpu: 128m
+            requests:
+              memory: 192Mi
+              cpu: 64m
           startupProbe:
             httpGet:
               path: /healthz-with-db
