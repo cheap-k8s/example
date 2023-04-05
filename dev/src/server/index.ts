@@ -19,7 +19,7 @@ await server.register(fastifyTRPCPlugin, {
   trpcOptions: { router: appRouter, createContext },
 })
 
-server.get('/health', () => "It's healthy!")
+server.get('/healthz', () => 'OK\n')
 
 try {
   await server.listen({ port, host: '0.0.0.0' })
