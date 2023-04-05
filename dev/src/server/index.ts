@@ -5,6 +5,7 @@ import cors from '@fastify/cors'
 
 import { appRouter } from './router'
 import { createContext } from './context'
+import { prisma } from './prisma'
 
 const port = 3000
 const server = fastify({ logger: true })
@@ -20,6 +21,14 @@ await server.register(fastifyTRPCPlugin, {
 })
 
 server.get('/healthz', () => 'OK\n')
+server.get('/healthz-with-db', async (_, rep) => {
+  try {
+    await prisma.$connect()
+    return 'OK\n'
+  } catch (erorr) {
+    return rep.code(503).send('Unavailable\n')
+  }
+})
 
 try {
   await server.listen({ port, host: '0.0.0.0' })
