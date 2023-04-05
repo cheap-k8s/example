@@ -25,6 +25,13 @@ spec:
             requests:
               memory: 24Mi
               cpu: 24m
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 80
+            failureThreshold: 30
+            periodSeconds: 5
+            timeoutSeconds: 1
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname

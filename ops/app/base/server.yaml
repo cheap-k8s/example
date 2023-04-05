@@ -25,6 +25,13 @@ spec:
             requests:
               memory: 256Mi
               cpu: 128m
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 3000
+            failureThreshold: 30
+            periodSeconds: 5
+            timeoutSeconds: 1
           env:
       topologySpreadConstraints:
         - maxSkew: 1
