@@ -10,10 +10,10 @@ replicas:
 images:
   - name: client
     newName: us-central1-docker.pkg.dev/cheap-k8s-dev/example/client
-    newTag: v0.1.4
+    newTag: v0.1.5
   - name: server
     newName: us-central1-docker.pkg.dev/cheap-k8s-dev/example/server
-    newTag: v0.1.4
+    newTag: v0.1.5
 patches:
   - target:
       kind: Ingress
