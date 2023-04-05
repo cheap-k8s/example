@@ -101,6 +101,7 @@ export function createPGOResources({
         image:
           'registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-14.6-0',
         postgresVersion: 14,
+        disableDefaultPodScheduling: true,
         instances: [
           {
             name: 'pgo-instance',
@@ -113,6 +114,19 @@ export function createPGOResources({
                 },
               },
             },
+            topologySpreadConstraints: [
+              {
+                maxSkew: 1,
+                topologyKey: 'kubernetes.io/hostname',
+                whenUnsatisfiable: 'DoNotSchedule',
+                labelSelector: {
+                  matchLabels: {
+                    'postgres-operator.crunchydata.com/instance-set':
+                      'pgo-instance',
+                  },
+                },
+              },
+            ],
           },
         ],
         metadata: {
