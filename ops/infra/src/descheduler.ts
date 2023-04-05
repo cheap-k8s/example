@@ -9,30 +9,26 @@ export type DeschedulerResourcesProps = {
 export function createDeschedulerResources({
   k8sProvider,
 }: DeschedulerResourcesProps) {
-  const namespace = new k8s.core.v1.Namespace(
-    'descheduler-namespace',
-    {
-      metadata: {
-        name: 'descheduler',
-      },
-    },
-    {
-      provider: k8sProvider,
-    },
-  )
   const descheduler = new k8s.helm.v3.Release(
     'descheduler',
     {
       chart: 'descheduler',
-      namespace: namespace.metadata.name,
+      namespace: 'kube-system',
       repositoryOpts: {
         repo: 'https://kubernetes-sigs.github.io/descheduler/',
       },
       values: {
-        namespace: {
+        resources: {
           requests: {
             cpu: 0,
             memory: 0,
+          },
+        },
+        deschedulerPolicy: {
+          strategies: {
+            LowNodeUtilization: {
+              enabled: false,
+            },
           },
         },
         schedule: '*/5 * * * *',
