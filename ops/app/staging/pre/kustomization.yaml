@@ -5,7 +5,7 @@ resources:
 images:
   - name: server
     newName: us-central1-docker.pkg.dev/cheap-k8s-dev/example/server
-    newTag: v0.1.3-20230405-022400utc
+    newTag: v0.1.4-20230405-023025utc
 patchesStrategicMerge:
   - |-
     apiVersion: batch/v1
