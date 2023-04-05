@@ -22,9 +22,10 @@ spec:
           resources:
             limits:
               memory: 24Mi
-            requests:
-              memory: 24Mi
               cpu: 24m
+            requests:
+              memory: 12Mi
+              cpu: 12m
           startupProbe:
             httpGet:
               path: /healthz
